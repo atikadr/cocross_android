@@ -1,6 +1,7 @@
 package com.cocross;
 
 import com.cocross.utils.ParseProxyObject;
+import com.parse.Parse;
 import com.parse.ParseObject;
 
 import android.app.Activity;
@@ -17,11 +18,13 @@ import android.view.View;
  */
 public class ActivityWorkoutDetail extends FragmentActivity{
 	public final static String KEY_WORKOUT = "workout";
-	ParseProxyObject mWorkout;
+	private ParseProxyObject mWorkout;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mWorkout = (ParseProxyObject) getIntent().getSerializableExtra(KEY_WORKOUT);
+		//TODO remove this to put in launcher activity
+		Parse.initialize(this, "tIV7myvZXkFyeUe4uP6vUg889npZQX2es8LO7AKv", "rPAcfcivzZJjw0nlcPGske1oG4EDraPP11cngjr7");
 		setContentView(R.layout.activity_workout_detail);
 	}
 	
@@ -38,6 +41,10 @@ public class ActivityWorkoutDetail extends FragmentActivity{
 	public void keyInButtonClicked(View v){
 		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message", "AMRAP");
 		mDialog.show(getSupportFragmentManager(), "qr_dialog");
+	}
+
+	public ParseProxyObject getWorkout() {
+		return mWorkout;
 	}
 	
 
