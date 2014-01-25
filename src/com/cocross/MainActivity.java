@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -66,6 +67,30 @@ public class MainActivity extends Activity {
 		facebookUserName = (TextView) facebookInfoTableRow.findViewById(R.id.facebookUserName);
 		facebookAge = (TextView) facebookInfoTableRow.findViewById(R.id.facebookAge);
 		facebookId = (TextView) facebookInfoTableRow.findViewById(R.id.facebookId);
+		
+		final PopupMenu menu = new PopupMenu(this, facebookProfilePic);
+		menu.inflate(R.menu.facebook);
+		
+		facebookProfilePic.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				menu.show();	
+			}
+			
+		});
+		
+		menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				Session session = Session.getActiveSession();
+				if(session.isOpened()) {
+					session.closeAndClearTokenInformation();
+				}
+				return false;
+			}
+		});
 		
 		workOutButton = (Button) findViewById(R.id.workOutButton);
 		workOutButton.setOnClickListener(new OnClickListener(){
