@@ -10,6 +10,7 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -179,7 +180,8 @@ public class MainActivity extends Activity {
                     	facebookId.setText(user.getId());
                         facebookProfilePic.setProfileId(user.getId());
                         facebookUserName.setText(user.getName());
-                        facebookAge.setText(getAge(user.getBirthday()));
+                        if(user.getBirthday()!=null)
+                        	facebookAge.setText(getAge(user.getBirthday()));
                     }
                 }
                 if (response.getError() != null) {
