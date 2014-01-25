@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.facebook_fragment);
+		setContentView(R.layout.activity_main);
 
 		facebookUiHelper = new UiLifecycleHelper(this, callback);
 		facebookUiHelper.onCreate(savedInstanceState);
