@@ -61,13 +61,14 @@ public class WorkOutList extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
-	    switch (item.getItemId()) {
-	        case R.id.action_search:
-	            return true;
-	        case R.id.action_settings:
-	            return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
+	    int id = item.getItemId();
+	    
+	    if(id == R.id.action_search) {
+	    	return true;
+	    } else if(id == R.id.action_settings) {
+	        return true;
+	    } else {
+	        return super.onOptionsItemSelected(item);
 	    }
 	}
 
