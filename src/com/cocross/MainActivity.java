@@ -29,6 +29,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.facebook.widget.ProfilePictureView;
+import com.parse.Parse;
 
 public class MainActivity extends Activity {
 	
@@ -54,6 +55,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		Parse.initialize(this, "tIV7myvZXkFyeUe4uP6vUg889npZQX2es8LO7AKv", "rPAcfcivzZJjw0nlcPGske1oG4EDraPP11cngjr7");
 
 		facebookUiHelper = new UiLifecycleHelper(this, callback);
 		facebookUiHelper.onCreate(savedInstanceState);
