@@ -28,14 +28,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
-
-        <com.facebook.widget.ProfilePictureView
-            android:id="@+id/facebookProfilePic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_horizontal" />
-
+	    <RelativeLayout
+	        android:id="@+id/icon_layout"
+	        android:layout_width="@dimen/profile_pic_mask"
+	        android:layout_height="@dimen/profile_pic_mask">
+	        <com.facebook.widget.ProfilePictureView
+	            android:id="@+id/facebookProfilePic"
+	            android:layout_width="@dimen/profile_pic"
+	            android:layout_height="@dimen/profile_pic"
+	            android:layout_gravity="center"
+	            android:gravity="center_horizontal"
+            	android:scaleType="fitXY" />
+	        <ImageView
+	            android:id="@+id/icon_mask"
+	            android:layout_width="@dimen/profile_pic_mask"
+	            android:layout_height="@dimen/profile_pic_mask"
+	            android:layout_centerInParent="true"
+	            android:background="@drawable/circle"
+	            android:scaleType="fitXY" >
+			</ImageView>
+	    </RelativeLayout>
         <TextView
             android:id="@+id/facebookUserName"
             android:layout_width="wrap_content"
