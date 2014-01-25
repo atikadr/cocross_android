@@ -20,7 +20,14 @@
         <activity
             android:name="com.cocross.MainActivity"
             android:label="@string/app_name" >
-            
+
+        </activity>
+        <activity
+            android:name="com.cocross.ActivityCounter"
+         />
+        <activity 
+            android:name="com.cocross.ActivityWorkoutDetail"
+            >
         </activity>
         <activity
             android:name="com.cocross.FacebookSession"
