@@ -1,4 +1,4 @@
-package com.cocross;
+/*package com.cocross;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -76,7 +76,9 @@ public class FacebookInfoFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View theView = inflater.inflate(R.layout.facebook_info, null, false);
+		View theView = inflater.inflate(R.layout.facebook_info, container, false);
+		
+		facebookId = (TextView) theView.findViewById(R.id.facebookId);
 		
 		facebookProfilePic = (ProfilePictureView) theView.findViewById(R.id.facebookProfilePic);
 		facebookProfilePic.setCropped(true);
@@ -112,3 +114,4 @@ public class FacebookInfoFragment extends Fragment {
 		uiLifeHelper.onSaveInstanceState(outState);
 	}
 }
+*/
