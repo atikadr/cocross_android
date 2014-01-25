@@ -30,7 +30,7 @@
             >
         </activity>
         <activity
-            android:name="com.cocross.FacebookSession"
+            android:name="com.cocross.MainActivity"
             android:label="@string/title_activity_facebook" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
