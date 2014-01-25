@@ -1,4 +1,4 @@
-package com.example.cocross;
+package com.cocross;
 
 import java.util.Date;
 import java.util.List;

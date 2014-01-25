@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/activity_margin"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/text_workout_name"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Workout 13.1"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <LinearLayout 
+        android:layout_below="@+id/text_workout_name"
+	    android:layout_above="@+id/button_start"
+	    android:background="@drawable/info_background"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <TextView
+        android:id="@+id/label_workout_description_label"
+        android:padding="@dimen/text_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="What to do:"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <ScrollView
+	    android:layout_height="match_parent"
+	    android:layout_width="match_parent">
+	        <TextView
+	        android:id="@+id/text_workout_description"
+	        android:layout_margin="@dimen/text_margin"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:text="@string/sample_description"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+		</ScrollView>
+    </LinearLayout>
+	    
+    
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startButtonClicked"
+        android:text="@string/button_start_text" />
+    <Button
+        android:id="@+id/button_key_in_score"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="keyInButtonClicked"
+        android:text="@string/button_key_in_score" />
+    
+
+</RelativeLayout>
