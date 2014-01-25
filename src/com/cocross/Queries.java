@@ -27,7 +27,7 @@ public class Queries {
 			CountCallback ccb
 			){
 
-		ParseObject logs = new ParseObject("logs");
+		ParseObject logs = new ParseObject("Logs");
 		logs.put("score", score);
 		logs.put("description", description);
 		logs.put("workoutTime", workoutTime);
@@ -36,7 +36,7 @@ public class Queries {
 		
 		ParseObject PR = null;
 		
-		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("logs");
+		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Logs");
 		mainQuery.whereEqualTo("createdBy", ParseUser.getCurrentUser());
 		mainQuery.whereEqualTo("workout", workout);
 		mainQuery.whereEqualTo("isPR", true);
@@ -85,7 +85,7 @@ public class Queries {
 		
 		int myRank;
 		
-		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("logs");
+		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Logs");
 
 		mainQuery.whereEqualTo("workout", logs.get("workout"));
 		mainQuery.whereEqualTo("gender", logs.get("gender"));
@@ -98,7 +98,7 @@ public class Queries {
 	}
 	
 	public void getMyLogs10(){
-		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("logs");
+		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Logs");
 		mainQuery.whereEqualTo("createdBy", ParseUser.getCurrentUser());
 		mainQuery.addDescendingOrder("workoutTime");
 		mainQuery.setLimit(10);
@@ -119,6 +119,10 @@ public class Queries {
 		        }
 		    }	
 		});
+	}
+
+	public void getBoxes(){
+		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Box");
 	}
 
 }
