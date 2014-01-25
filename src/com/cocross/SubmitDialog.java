@@ -3,6 +3,7 @@ package com.cocross;
 import java.util.Date;
 
 import com.cocross.utils.ParseProxyObject;
+import com.cocross.utils.Queries;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
