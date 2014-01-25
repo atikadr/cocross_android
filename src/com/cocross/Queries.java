@@ -7,38 +7,39 @@ import android.net.ParseException;
 import android.util.Log;
 import android.view.View;
 
+import com.cocross.utils.ParseProxyObject;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 /**
- * 
+ * Provides helper functions when querying the server
  * @author LENOVO
  *
  */
 public class Queries {
-	public void submitLogAndGetRanking(	
+	static public void submitLogAndGetRanking(	
 			final Date workoutTime,
 			final String description,
-			final boolean isPR,
 			final int score,
-			final ParseObject workout,
+			final String comment,
+			final ParseProxyObject workout,
 			CountCallback ccb
 			){
 
 		ParseObject logs = new ParseObject("Logs");
 		logs.put("score", score);
-		logs.put("description", description);
 		logs.put("workoutTime", workoutTime);
-		logs.put("workout", workout);
-		logs.put("createdBy", ParseUser.getCurrentUser());
+		logs.put("comment", comment);
+		//logs.put("workout", workout);
+		//logs.put("createdBy", ParseUser.getCurrentUser());
 		
 		ParseObject PR = null;
 		
 		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Logs");
-		mainQuery.whereEqualTo("createdBy", ParseUser.getCurrentUser());
-		mainQuery.whereEqualTo("workout", workout);
+		//mainQuery.whereEqualTo("createdBy", ParseUser.getCurrentUser());
+		//mainQuery.whereEqualTo("workout", workout);
 		mainQuery.whereEqualTo("isPR", true);
 		try {
 			PR = mainQuery.getFirst();
@@ -49,6 +50,8 @@ public class Queries {
 		
 		if (PR == null || PR.getInt("score") < score){
 			logs.put("isPR", true);
+			PR.put("isPR", false);
+			PR.saveInBackground();
 		}
 
 		logs.saveInBackground();
@@ -81,7 +84,7 @@ public class Queries {
 	 * @param workoutName
 	 * @param ccb
 	 */
-	public void getMyRanking(ParseObject logs, CountCallback ccb){
+	public static void getMyRanking(ParseObject logs, CountCallback ccb){
 		
 		int myRank;
 		
