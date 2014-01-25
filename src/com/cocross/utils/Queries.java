@@ -125,7 +125,13 @@ public class Queries {
 
 	public void getBoxes(){
 		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Box");
-		List<ParseObject> boxes = mainQuery.find();
+		List<ParseObject> boxes = null;
+		try {
+			boxes = mainQuery.find();
+		} catch (com.parse.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int i, boxsize = boxes.size();
 		List<String> regions;
 		int region;
