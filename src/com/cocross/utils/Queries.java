@@ -1,4 +1,4 @@
-package com.cocross;
+package com.cocross.utils;
 
 import java.util.Date;
 import java.util.List;
@@ -7,7 +7,6 @@ import android.net.ParseException;
 import android.util.Log;
 import android.view.View;
 
-import com.cocross.utils.ParseProxyObject;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
