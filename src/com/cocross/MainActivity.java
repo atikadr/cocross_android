@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		Parse.initialize(this, "tIV7myvZXkFyeUe4uP6vUg889npZQX2es8LO7AKv", "rPAcfcivzZJjw0nlcPGske1oG4EDraPP11cngjr7");
 
+		final ActionBar actionBar = getActionBar();
+        actionBar.hide(); 
 		facebookUiHelper = new UiLifecycleHelper(this, callback);
 		facebookUiHelper.onCreate(savedInstanceState);
 		
