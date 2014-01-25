@@ -72,6 +72,7 @@ public class WorkOutList extends ListActivity {
 	    }
 	}
 
+
 	private class WorkOutAdapter extends ArrayAdapter<ParseProxyObject> {
 
 		private static final int DESC_MAX_LENGTH = 15;

@@ -23,8 +23,6 @@ public class ActivityWorkoutDetail extends FragmentActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mWorkout = (ParseProxyObject) getIntent().getSerializableExtra(KEY_WORKOUT);
-		//TODO remove this to put in launcher activity
-		Parse.initialize(this, "tIV7myvZXkFyeUe4uP6vUg889npZQX2es8LO7AKv", "rPAcfcivzZJjw0nlcPGske1oG4EDraPP11cngjr7");
 		setContentView(R.layout.activity_workout_detail);
 	}
 	
