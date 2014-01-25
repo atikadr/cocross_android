@@ -55,6 +55,8 @@
         android:layout_toRightOf="@+id/button_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="keyInButtonClicked"
         android:text="@string/button_key_in_score" />
+    
 
 </RelativeLayout>

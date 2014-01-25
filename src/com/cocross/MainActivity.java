@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
     }
     
     public void newLogClicked(View v){
-    	Intent startNewLog = new Intent(MainActivity.this, ActivityNewLog.class);
+    	Intent startNewLog = new Intent(MainActivity.this, ActivityWorkoutDetail.class);
     	startActivity(startNewLog);
     }
 
