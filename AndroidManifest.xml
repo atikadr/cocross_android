@@ -28,7 +28,6 @@
         <activity 
             android:name="com.cocross.ActivityWorkoutDetail"
             >
-                        <intent-filter>
         </activity>
         <activity
             android:name="com.cocross.Facebook"
