@@ -1,6 +1,11 @@
 package com.cocross;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -149,7 +154,7 @@ public class MainActivity extends Activity {
                     	facebookId.setText(user.getId());
                         facebookProfilePic.setProfileId(user.getId());
                         facebookUserName.setText(user.getName());
-                        facebookAge.setText(user.getBirthday());
+                        facebookAge.setText(getAge(user.getBirthday()));
                     }
                 }
                 if (response.getError() != null) {
@@ -170,6 +175,30 @@ public class MainActivity extends Activity {
 				makeMeRequest(session);
 			}
 		}
+	}
+	
+	private int getAge(String birthDateString) {
+		
+		Date birthDate = null;
+		
+		try {
+			birthDate = new SimpleDateFormat("MM/DD/yyyy", Locale.ENGLISH).parse(birthDateString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		Calendar dob = Calendar.getInstance();  
+		dob.setTime(birthDate);  
+		Calendar today = Calendar.getInstance();  
+		int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);  
+		if (today.get(Calendar.MONTH) < dob.get(Calendar.MONTH)) {
+		  age--;  
+		} else if (today.get(Calendar.MONTH) == dob.get(Calendar.MONTH)
+		    && today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+		  age--;  
+		}
+		
+		return age;
 	}
 	
 	@Override
