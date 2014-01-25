@@ -4,5 +4,7 @@
     <string name="app_name">CoCross</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    <string name="title_activity_facebook">Facebook</string>
+	<string name="title_facebook_login">Facebook</string>
+	
 </resources>
