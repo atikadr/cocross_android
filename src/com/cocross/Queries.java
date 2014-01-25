@@ -123,6 +123,13 @@ public class Queries {
 
 	public void getBoxes(){
 		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Box");
+		List<ParseObject> boxes = mainQuery.find();
+		int i, boxsize = boxes.size();
+		List<String> regions;
+		int region;
+		for (i=0;i<boxsize;i++){
+			//do something with boxes.get(i).get("boxName");
+		}
 	}
 
 }
