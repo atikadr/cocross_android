@@ -200,8 +200,10 @@ public class MainActivity extends Activity {
 	private void showView(int id) {
 		if(id == LOG_IN) {
 			facebookInfoTableRow.setVisibility(View.GONE);
+			logInTableRow.setVisibility(View.VISIBLE);
 		} else {
 			logInTableRow.setVisibility(View.GONE);
+			facebookInfoTableRow.setVisibility(View.VISIBLE);
 			Session session = Session.getActiveSession();
 			if(session.isOpened()) {
 				makeMeRequest(session);
