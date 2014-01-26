@@ -37,7 +37,7 @@ public class ActivityCounter extends FragmentActivity {
 	private boolean isLight = true;
 	private boolean isFirstTime = true;
 
-	private static final float SHAKE_THRESHOLD_GRAVITY = 2.2F;
+	private static final float SHAKE_THRESHOLD_GRAVITY = 1.7F;
 	private static final int SHAKE_SLOP_TIME_MS = 500;
 
 	private long mShakeTimestamp;
@@ -64,6 +64,7 @@ public class ActivityCounter extends FragmentActivity {
 
 		counterTextView = (TextView) findViewById(R.id.counterTextView);
 		countingChronometer = (Chronometer) findViewById(R.id.countingChronometer);
+		counterHintTextView = (TextView) findViewById(R.id.counterHintTextView);
 		
 		countingTextView = (TextView) findViewById(R.id.countingTextView);
 		vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -100,7 +101,6 @@ public class ActivityCounter extends FragmentActivity {
 			if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
 				if (isContinue) {
 					isLight = !isLight;
-					countingTextView.setText("(Tap the Proximity Sensor to count)");
 					if (!isLight) {
 						counter++;
 						counterTextView.setText(String.valueOf(counter));
@@ -143,10 +143,13 @@ public class ActivityCounter extends FragmentActivity {
 					if (isFirstTime) {
 						shakeMode = SHAKE_MODE.START;
 						isFirstTime = false;
+						counterHintTextView.setText("(Tap the Proximity Sensor to count)");
 					} else if (shakeMode == SHAKE_MODE.PAUSE) {
 						shakeMode = SHAKE_MODE.START;
+						counterHintTextView.setText("(Tap the Proximity Sensor to count)");
 					} else {
 						shakeMode = SHAKE_MODE.PAUSE;
+						counterHintTextView.setText("");
 					}
 
 					mShakeTimestamp = now;
@@ -195,7 +198,6 @@ public class ActivityCounter extends FragmentActivity {
 		} else if (shakeMode == SHAKE_MODE.PAUSE) {
 			isContinue = false;
 			countingTextView.setText("(Shake to start)");
-			countingTextView.setText("");
 			countingChronometer.stop();
 		}
 	}
