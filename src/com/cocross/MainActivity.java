@@ -42,8 +42,6 @@ public class MainActivity extends Activity {
 	private LoginButton facebookLoginButton;
 	private ProfilePictureView facebookProfilePic;
 	private TextView facebookUserName;
-	private TextView facebookAge;
-	private TextView facebookId;
 	
 	private Button workOutButton;
 
@@ -73,8 +71,6 @@ public class MainActivity extends Activity {
 		facebookInfoTableRow = (TableRow) findViewById(R.id.facebookInfoTableRow);
 		facebookProfilePic = (ProfilePictureView) facebookInfoTableRow.findViewById(R.id.facebookProfilePic);
 		facebookUserName = (TextView) facebookInfoTableRow.findViewById(R.id.facebookUserName);
-		facebookAge = (TextView) facebookInfoTableRow.findViewById(R.id.facebookAge);
-		facebookId = (TextView) facebookInfoTableRow.findViewById(R.id.facebookId);
 		
 		final PopupMenu menu = new PopupMenu(this, facebookProfilePic);
 		menu.inflate(R.menu.facebook);
@@ -189,7 +185,6 @@ public class MainActivity extends Activity {
             public void onCompleted(GraphUser user, Response response) {
                 if (session == Session.getActiveSession()) {
                     if (user != null) {
-                    	facebookId.setText(user.getId());
                         facebookProfilePic.setProfileId(user.getId());
                         facebookUserName.setText(user.getName());
                         if(ParseUser.getCurrentUser()==null){

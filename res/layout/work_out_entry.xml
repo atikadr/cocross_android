@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="10sp"
-    android:layout_marginBottom="10sp" >
+    android:paddingLeft="10dp" >
 
     <TableRow
         android:id="@+id/tableRow1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="5sp"
-        android:paddingBottom="5sp" >
+        android:paddingTop="5sp" >
 
         <TextView
             android:id="@+id/workOutNameTextView"
@@ -25,8 +24,7 @@
         android:id="@+id/tableRow2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="5sp"
-        android:paddingBottom="5sp" >
+        android:paddingTop="5sp" >
 
         <TextView
             android:id="@+id/workOutDescriptionTextView"
@@ -41,8 +39,7 @@
         android:id="@+id/tableRow3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="5sp"
-        android:paddingBottom="5sp" >
+        android:paddingTop="5sp" >
 
         <TextView
             android:id="@+id/workOutScoreTextView"

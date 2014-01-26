@@ -79,7 +79,7 @@ public class WorkOutList extends ListActivity {
 
 	private class WorkOutAdapter extends ArrayAdapter<ParseProxyObject> {
 
-		private static final int DESC_MAX_LENGTH = 15;
+		private static final int DESC_MAX_LENGTH = 50;
 
 		public WorkOutAdapter(ArrayList<ParseProxyObject> workOutList) {
 			super(getApplication(), android.R.layout.simple_list_item_1, workOutList);
