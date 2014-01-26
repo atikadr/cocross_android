@@ -22,8 +22,7 @@
 		        android:layout_height="wrap_content"
 	       		android:layout_gravity="center_horizontal"
 		        android:textSize="50sp"
-		        android:hint="00"
-		        android:text="195"/>
+		        android:hint="00"/>
 
 	        <TextView
 	            android:id="@+id/label_score_type"

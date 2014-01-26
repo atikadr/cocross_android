@@ -3,6 +3,7 @@ package com.cocross;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import android.widget.TextView;
 
 import com.cocross.utils.ParseProxyObject;
 import com.cocross.utils.Queries;
+import com.facebook.widget.ProfilePictureView;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 public class WorkOutList extends ListActivity {
 
@@ -31,6 +34,13 @@ public class WorkOutList extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_work_out_list);
 		
+<<<<<<< HEAD
+=======
+		MainActivity.setActionBar(this, R.layout.actionbar_custom_view_home);
+        
+
+		//TODO : change workouts to workOutList ParseObject
+>>>>>>> d8713dbd4fb24bf05f0b1df770db1d250b65a3ca
 		List<ParseObject> workOutList = Queries.getWorkoutList();
 		mWorkOutList = (ArrayList<ParseObject>) workOutList;
 		adapter = new WorkOutAdapter(mWorkOutList);
@@ -57,8 +67,8 @@ public class WorkOutList extends ListActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.action_bar, menu);
+//	    MenuInflater inflater = getMenuInflater();
+//	    inflater.inflate(R.menu.action_bar, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
 	

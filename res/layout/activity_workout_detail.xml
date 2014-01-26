@@ -15,7 +15,7 @@
     
     <LinearLayout 
         android:layout_below="@+id/text_workout_name"
-	    android:layout_above="@+id/button_start"
+	    android:layout_above="@+id/button_key_in_score"
 	    android:background="@drawable/info_background"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -39,30 +39,29 @@
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
 		</ScrollView>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button_start"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="startButtonClicked"
-        android:text="@string/button_start_text" />
     <Button
         android:id="@+id/button_key_in_score"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/button_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="keyInButtonClicked"
         android:text="@string/button_key_in_score" />
     <Button
-        android:id="@+id/button_key_in_score"
+        android:id="@+id/button_cancel"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/button_key_in_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_cancel"
         android:onClick="onDismiss" />
-    
+
+    <Button
+        android:id="@+id/button_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="startButtonClicked"
+        android:text="@string/button_start_text" />
 
 </RelativeLayout>
