@@ -114,10 +114,15 @@ public class MainActivity extends Activity {
 		Session session = Session.getActiveSession();
 		if(session.isOpened()) {
 			showView(FACEBOOK_INFO);
+			populateWorkoutListView();
 		} else {
 			showView(LOG_IN);
 		}
 
+	}
+
+	private void populateWorkoutListView() {
+		
 	}
 
 	@Override
