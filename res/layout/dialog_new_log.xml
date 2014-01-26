@@ -46,6 +46,8 @@
         android:id="@+id/field_comment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/text_margin"
+        android:paddingBottom="@dimen/text_margin"
         android:ems="10" >
 
         <requestFocus />
@@ -56,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 	    android:layout_gravity="center"
+	    android:background="@drawable/neutral_button"
         android:text="Okay, Submit!" />
 
 </LinearLayout>
