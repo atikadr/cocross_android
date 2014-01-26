@@ -1,18 +1,19 @@
 package com.cocross;
 
-import com.cocross.utils.ParseProxyObject;
-
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.v4.app.FragmentActivity;
 import android.util.FloatMath;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
+
+import com.cocross.utils.ParseProxyObject;
 
 public class ActivityCounter extends FragmentActivity {
 
@@ -20,20 +21,26 @@ public class ActivityCounter extends FragmentActivity {
 	Sensor acceSensor;
 	SensorManager sensorManager;
 
+	Vibrator vibrator;
+	
 	int counter;
 
 	Chronometer countingChronometer;
 
 	TextView counterTextView;
+	TextView countingTextView;
+	TextView counterHintTextView;
+
+	private boolean isContinue = false;
 
 	private SHAKE_MODE shakeMode;
 	private boolean isLight = true;
 	private boolean isFirstTime = true;
-	
-	private static final float SHAKE_THRESHOLD_GRAVITY = 2.7F;
-    private static final int SHAKE_SLOP_TIME_MS = 500;
- 
-    private long mShakeTimestamp;
+
+	private static final float SHAKE_THRESHOLD_GRAVITY = 2.2F;
+	private static final int SHAKE_SLOP_TIME_MS = 500;
+
+	private long mShakeTimestamp;
 
 	private enum SHAKE_MODE {
 		START, PAUSE, NON
@@ -50,31 +57,36 @@ public class ActivityCounter extends FragmentActivity {
 		proxySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 		acceSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
-		sensorManager.registerListener(listener, proxySensor,
+		sensorManager.registerListener(touchListener, proxySensor,
 				SensorManager.SENSOR_DELAY_NORMAL);
-		sensorManager.registerListener(listener, acceSensor,
+		sensorManager.registerListener(shakeListener, acceSensor,
 				SensorManager.SENSOR_DELAY_GAME);
 
 		counterTextView = (TextView) findViewById(R.id.counterTextView);
-
 		countingChronometer = (Chronometer) findViewById(R.id.countingChronometer);
-
+		
+		countingTextView = (TextView) findViewById(R.id.countingTextView);
+		vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+		
 		mShakeTimestamp = System.currentTimeMillis();
 
 	}
 
 	public void onFinishClicked(View v) {
-		String score = (String) ((TextView)findViewById(R.id.counterTextView)).getText();
-		ParseProxyObject workout = (ParseProxyObject) getIntent().getSerializableExtra("workout");
+		String score = (String) ((TextView) findViewById(R.id.counterTextView))
+				.getText();
+		ParseProxyObject workout = (ParseProxyObject) getIntent()
+				.getSerializableExtra("workout");
 		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message",
 				workout, score);
 		mDialog.show(getSupportFragmentManager(), "qr_dialog");
 	}
 
-	public void onDiscardClicked(View v){
+	public void onDiscardClicked(View v) {
 		finish();
 	}
-	private SensorEventListener listener = new SensorEventListener() {
+
+	private SensorEventListener touchListener = new SensorEventListener() {
 
 		@Override
 		public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -86,86 +98,125 @@ public class ActivityCounter extends FragmentActivity {
 		public void onSensorChanged(SensorEvent event) {
 
 			if (event.sensor.getType() == Sensor.TYPE_PROXIMITY) {
-				isLight = !isLight;
-				if (!isLight) {
-					counter++;
-					counterTextView.setText(String.valueOf(counter));
-				}
-			}
-
-			else if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-				
-				if (listener != null) {
-		            float x = event.values[0];
-		            float y = event.values[1];
-		            float z = event.values[2];
-		 
-		            float gX = x / SensorManager.GRAVITY_EARTH;
-		            float gY = y / SensorManager.GRAVITY_EARTH;
-		            float gZ = z / SensorManager.GRAVITY_EARTH;
-		 
-		            // gForce will be close to 1 when there is no movement.
-		            float gForce = FloatMath.sqrt(gX * gX + gY * gY + gZ * gZ);
-		 
-		            if (gForce > SHAKE_THRESHOLD_GRAVITY) {
-		                final long now = System.currentTimeMillis();
-		                // ignore shake events too close to each other (500ms)
-		                if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
-		                    return;
-		                }
-		 
-		                if(isFirstTime) {
-		                	shakeMode = SHAKE_MODE.START;
-		                	isFirstTime = false;
-		                } else {
-		                	shakeMode = SHAKE_MODE.PAUSE;
-		                }
-		 
-		                mShakeTimestamp = now;
-		                doAccordingToShakeMode(shakeMode);
-		            }
-				}
-				
-				
-			}
-		}
-
-		private void doAccordingToShakeMode(SHAKE_MODE shakeMode) {
-
-			if (shakeMode == SHAKE_MODE.START) {
-				int stoppedMilliseconds = 0;
-
-				String chronoText = countingChronometer.getText().toString();
-				String array[] = chronoText.split(":");
-
-				try {
-
-					if (array.length == 2) {
-
-						stoppedMilliseconds = Integer.parseInt(array[0]) * 60
-								* 1000 + Integer.parseInt(array[1]) * 1000;
-
-					} else if (array.length == 3) {
-
-						stoppedMilliseconds = Integer.parseInt(array[0]) * 60
-								* 60 * 1000 + Integer.parseInt(array[1]) * 60
-								* 1000 + Integer.parseInt(array[2]) * 1000;
+				if (isContinue) {
+					isLight = !isLight;
+					countingTextView.setText("(Tap the Proximity Sensor to count)");
+					if (!isLight) {
+						counter++;
+						counterTextView.setText(String.valueOf(counter));
+						vibrator.vibrate(300);
 					}
-
-				} catch (Exception e) {
-					stoppedMilliseconds = 0;
 				}
-
-				countingChronometer.setBase(SystemClock.elapsedRealtime()
-						- stoppedMilliseconds);
-
-				secondsWaiting = Long.parseLong(array[1]);
-				countingChronometer.start();
-
-			} else if (shakeMode == SHAKE_MODE.PAUSE) {
-				countingChronometer.stop();
 			}
 		}
 	};
 
+	private SensorEventListener shakeListener = new SensorEventListener() {
+
+		@Override
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onSensorChanged(SensorEvent event) {
+			if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+				float x = event.values[0];
+				float y = event.values[1];
+				float z = event.values[2];
+
+				float gX = x / SensorManager.GRAVITY_EARTH;
+				float gY = y / SensorManager.GRAVITY_EARTH;
+				float gZ = z / SensorManager.GRAVITY_EARTH;
+
+				// gForce will be close to 1 when there is no movement.
+				float gForce = FloatMath.sqrt(gX * gX + gY * gY + gZ * gZ);
+
+				if (gForce > SHAKE_THRESHOLD_GRAVITY) {
+					final long now = System.currentTimeMillis();
+					// ignore shake events too close to each other (500ms)
+					if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
+						return;
+					}
+
+					if (isFirstTime) {
+						shakeMode = SHAKE_MODE.START;
+						isFirstTime = false;
+					} else if (shakeMode == SHAKE_MODE.PAUSE) {
+						shakeMode = SHAKE_MODE.START;
+					} else {
+						shakeMode = SHAKE_MODE.PAUSE;
+					}
+
+					mShakeTimestamp = now;
+					doAccordingToShakeMode(shakeMode);
+				}
+			}
+
+		}
+
+	};
+
+	private void doAccordingToShakeMode(SHAKE_MODE shakeMode) {
+
+		if (shakeMode == SHAKE_MODE.START) {
+			int stoppedMilliseconds = 0;
+
+			String chronoText = countingChronometer.getText().toString();
+			String array[] = chronoText.split(":");
+
+			try {
+
+				if (array.length == 2) {
+
+					stoppedMilliseconds = Integer.parseInt(array[0]) * 60
+							* 1000 + Integer.parseInt(array[1]) * 1000;
+
+				} else if (array.length == 3) {
+
+					stoppedMilliseconds = Integer.parseInt(array[0]) * 60 * 60
+							* 1000 + Integer.parseInt(array[1]) * 60 * 1000
+							+ Integer.parseInt(array[2]) * 1000;
+				}
+
+			} catch (Exception e) {
+				stoppedMilliseconds = 0;
+			}
+
+			countingChronometer.setBase(SystemClock.elapsedRealtime()
+					- stoppedMilliseconds);
+
+			secondsWaiting = Long.parseLong(array[1]);
+			isContinue = true;
+			countingTextView.setText("(Shake to pause)");
+			countingChronometer.start();
+
+		} else if (shakeMode == SHAKE_MODE.PAUSE) {
+			isContinue = false;
+			countingTextView.setText("(Shake to start)");
+			countingTextView.setText("");
+			countingChronometer.stop();
+		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		// Add the following line to register the Session Manager Listener
+		// onResume
+		sensorManager.registerListener(touchListener, proxySensor,
+				SensorManager.SENSOR_DELAY_NORMAL);
+		sensorManager.registerListener(shakeListener, acceSensor,
+				SensorManager.SENSOR_DELAY_NORMAL);
+
+	}
+
+	@Override
+	public void onPause() {
+		// Add the following line to unregister the Sensor Manager onPause
+		sensorManager.unregisterListener(touchListener);
+		sensorManager.unregisterListener(shakeListener);
+		super.onPause();
+	}
 }
