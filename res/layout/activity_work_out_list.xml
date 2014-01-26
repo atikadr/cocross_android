@@ -10,7 +10,9 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="0dip"
+        android:padding="@dimen/activity_margin"
         android:layout_weight="1" >
+        
     </ListView>
 
 </LinearLayout>

@@ -33,7 +33,11 @@ public class WorkOutList extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_work_out_list);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> 89cf3ccd0b1201f5130c737b20f9148fd831951f
 		MainActivity.setActionBar(this, R.layout.actionbar_custom_view_home);
         
 

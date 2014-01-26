@@ -28,13 +28,14 @@ public class SubmitDialog extends DialogFragment {
      * Create a new instance of MyDialogFragment, providing "text"
      * as an argument.
      */
-    static SubmitDialog newInstance(String msg, String type) {
+    static SubmitDialog newInstance(String msg, String type, String score) {
     	SubmitDialog f = new SubmitDialog();
 
         // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putString("msg", msg);
         args.putString("score_type", type);
+        args.putString("score", score);
         f.setArguments(args);
 
         return f;
@@ -53,6 +54,9 @@ public class SubmitDialog extends DialogFragment {
         
 	    LayoutInflater inflater = getActivity().getLayoutInflater();
 	    final View newLogView = inflater.inflate(R.layout.dialog_new_log, null);
+	    
+	    //set score
+	    ((EditText)newLogView.findViewById(R.id.field_score)).setText(getArguments().getString("score"));
 	    //submit button
 	    newLogView.findViewById(R.id.button_submit).setOnClickListener(
 	    		new OnClickListener() {

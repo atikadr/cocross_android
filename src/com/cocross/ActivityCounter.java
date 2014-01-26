@@ -62,11 +62,15 @@ public class ActivityCounter extends FragmentActivity {
 	}
 
 	public void onFinishClicked(View v) {
+		String score = (String) ((TextView)findViewById(R.id.counterTextView)).getText();
 		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message",
-				"AMRAP");
+				"AMRAP", score);
 		mDialog.show(getSupportFragmentManager(), "qr_dialog");
 	}
 
+	public void onDiscardClicked(View v){
+		finish();
+	}
 	private SensorEventListener listener = new SensorEventListener() {
 
 		@Override
