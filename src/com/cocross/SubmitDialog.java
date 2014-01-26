@@ -80,7 +80,7 @@ public class SubmitDialog extends DialogFragment {
 											Log.d("my rank!!!", "my ranking: " + (count + 1));
 										}
 										else {
-											//Log.d("query test", "Error " + e.getMessage());
+											Log.d("query test", "Error " + e.getMessage());
 										}
 									}
 								});

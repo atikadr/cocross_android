@@ -89,7 +89,7 @@ public class Queries {
 		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Logs");
 
 		mainQuery.whereEqualTo("workout", logs.get("workout"));
-		mainQuery.whereEqualTo("gender", logs.get("gender"));
+		//mainQuery.whereEqualTo("gender", logs.get("gender"));
 		mainQuery.whereEqualTo("isPR", true); 
 		mainQuery.whereGreaterThan("score", logs.get("score"));
 
