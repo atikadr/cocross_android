@@ -83,7 +83,7 @@ public class ActivityCounter extends FragmentActivity {
 				.getSerializableExtra("workout");
 		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message",
 				workout, score);
-		mDialog.show(getSupportFragmentManager(), "qr_dialog");
+		mDialog.show(getSupportFragmentManager(), "submit_dialog");
 	}
 
 	public void onDiscardClicked(View v) {
@@ -93,7 +93,7 @@ public class ActivityCounter extends FragmentActivity {
 		}
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage("Are you sure you want to cancel?");
+		builder.setMessage("Are you sure you want to discard?");
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			
 			@Override
