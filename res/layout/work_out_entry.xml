@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FF8000"
             android:textSize="14sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
     </TableRow>
 
     <TableRow

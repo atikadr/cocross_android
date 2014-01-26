@@ -7,22 +7,21 @@
     <TableRow
         android:id="@+id/logInTableRow"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:gravity="right" >
 
         <com.facebook.widget.LoginButton
             android:id="@+id/authButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp" />
-    
     </TableRow>
 
     <TableRow
         android:id="@+id/facebookInfoTableRow"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        android:gravity="right">
+        android:layout_height="match_parent"
+        android:gravity="right" >
 
         <TextView
             android:id="@+id/facebookUserName"
@@ -32,42 +31,58 @@
             android:layout_marginLeft="10dp"
             android:textColor="#333"
             android:textSize="18sp" />
-	    <FrameLayout
-	        android:id="@+id/icon_layout"
-	        android:layout_width="@dimen/profile_pic_mask"
-	        android:layout_height="@dimen/profile_pic_mask">
-	        <com.facebook.widget.ProfilePictureView
-	            android:id="@+id/facebookProfilePic"
-	            android:layout_width="@dimen/profile_pic_mask"
-	            android:layout_height="@dimen/profile_pic_mask"
-	            android:layout_gravity="center"
-	            android:gravity="center_horizontal"
-            	android:scaleType="fitXY" />
-	        <ImageView
-	            android:id="@+id/icon_mask"
-	            android:layout_width="@dimen/profile_pic_mask"
-	            android:layout_height="@dimen/profile_pic_mask"
-	            android:layout_centerInParent="true"
-	            android:background="@drawable/circle_mask"
-	            android:scaleType="fitXY" >
-			</ImageView>
-	    </FrameLayout>
-    
+
+        <FrameLayout
+            android:id="@+id/icon_layout"
+            android:layout_width="@dimen/profile_pic_mask"
+            android:layout_height="@dimen/profile_pic_mask" >
+
+            <com.facebook.widget.ProfilePictureView
+                android:id="@+id/facebookProfilePic"
+                android:layout_width="@dimen/profile_pic_mask"
+                android:layout_height="@dimen/profile_pic_mask"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:scaleType="fitXY" />
+
+            <ImageView
+                android:id="@+id/icon_mask"
+                android:layout_width="@dimen/profile_pic_mask"
+                android:layout_height="@dimen/profile_pic_mask"
+                android:layout_centerInParent="true"
+                android:background="@drawable/circle_mask"
+                android:scaleType="fitXY" >
+            </ImageView>
+        </FrameLayout>
     </TableRow>
-    
-    <TextView
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="@string/welcome"
-  	  
-        
-    />
-    
-    <Button
-    	android:id="@+id/workOutButton"
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:text="@string/work_out" 
-    />
+
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome"
+            android:textSize="40sp" 
+            android:gravity="center"/>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="15dp" >
+
+        <Button
+            android:id="@+id/workOutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/work_out" />
+    </TableRow>
 
 </TableLayout>
