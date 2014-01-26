@@ -7,6 +7,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
+import android.util.FloatMath;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -25,11 +26,15 @@ public class ActivityCounter extends FragmentActivity {
 
 	private SHAKE_MODE shakeMode;
 	private boolean isLight = true;
+	private boolean isFirstTime = true;
 	
-	private long lastUpdate;
+	private static final float SHAKE_THRESHOLD_GRAVITY = 2.7F;
+    private static final int SHAKE_SLOP_TIME_MS = 500;
+ 
+    private long mShakeTimestamp;
 
 	private enum SHAKE_MODE {
-		START, PAUSE
+		START, PAUSE, NON
 	};
 
 	long secondsWaiting = 0;
@@ -42,7 +47,7 @@ public class ActivityCounter extends FragmentActivity {
 		sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
 		proxySensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
 		acceSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		
+
 		sensorManager.registerListener(listener, proxySensor,
 				SensorManager.SENSOR_DELAY_NORMAL);
 		sensorManager.registerListener(listener, acceSensor,
@@ -51,8 +56,8 @@ public class ActivityCounter extends FragmentActivity {
 		counterTextView = (TextView) findViewById(R.id.counterTextView);
 
 		countingChronometer = (Chronometer) findViewById(R.id.countingChronometer);
-		
-		lastUpdate = System.currentTimeMillis();
+
+		mShakeTimestamp = System.currentTimeMillis();
 
 	}
 
@@ -81,27 +86,45 @@ public class ActivityCounter extends FragmentActivity {
 				}
 			}
 
-			else if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-				float[] values = event.values;
-			    // Movement
-			    float x = values[0];
-			    float y = values[1];
-			    float z = values[2];
-
-			    float accelationSquareRoot = (x * x + y * y + z * z)
-			        / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
-			    long actualTime = System.currentTimeMillis();
-			    if (accelationSquareRoot >= 2) //
-			    {
-			      if (actualTime - lastUpdate < 200) {
-			        return;
-			      }
-			      lastUpdate = actualTime;
-			    }
+			else if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+				
+				if (listener != null) {
+		            float x = event.values[0];
+		            float y = event.values[1];
+		            float z = event.values[2];
+		 
+		            float gX = x / SensorManager.GRAVITY_EARTH;
+		            float gY = y / SensorManager.GRAVITY_EARTH;
+		            float gZ = z / SensorManager.GRAVITY_EARTH;
+		 
+		            // gForce will be close to 1 when there is no movement.
+		            float gForce = FloatMath.sqrt(gX * gX + gY * gY + gZ * gZ);
+		 
+		            if (gForce > SHAKE_THRESHOLD_GRAVITY) {
+		                final long now = System.currentTimeMillis();
+		                // ignore shake events too close to each other (500ms)
+		                if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
+		                    return;
+		                }
+		 
+		                if(isFirstTime) {
+		                	shakeMode = SHAKE_MODE.START;
+		                	isFirstTime = false;
+		                } else {
+		                	shakeMode = SHAKE_MODE.PAUSE;
+		                }
+		 
+		                mShakeTimestamp = now;
+		                doAccordingToShakeMode(shakeMode);
+		            }
+				}
+				
+				
 			}
 		}
 
 		private void doAccordingToShakeMode(SHAKE_MODE shakeMode) {
+
 			if (shakeMode == SHAKE_MODE.START) {
 				int stoppedMilliseconds = 0;
 
@@ -131,6 +154,9 @@ public class ActivityCounter extends FragmentActivity {
 
 				secondsWaiting = Long.parseLong(array[1]);
 				countingChronometer.start();
+
+			} else if (shakeMode == SHAKE_MODE.PAUSE) {
+				countingChronometer.stop();
 			}
 		}
 	};

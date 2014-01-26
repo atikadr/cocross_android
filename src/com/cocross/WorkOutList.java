@@ -33,14 +33,11 @@ public class WorkOutList extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_work_out_list);
-		
-<<<<<<< HEAD
-=======
+
 		MainActivity.setActionBar(this, R.layout.actionbar_custom_view_home);
         
 
 		//TODO : change workouts to workOutList ParseObject
->>>>>>> d8713dbd4fb24bf05f0b1df770db1d250b65a3ca
 		List<ParseObject> workOutList = Queries.getWorkoutList();
 		mWorkOutList = (ArrayList<ParseObject>) workOutList;
 		adapter = new WorkOutAdapter(mWorkOutList);
