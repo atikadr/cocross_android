@@ -3,12 +3,10 @@ package com.cocross;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +16,7 @@ import android.widget.TextView;
 
 import com.cocross.utils.ParseProxyObject;
 import com.cocross.utils.Queries;
-import com.facebook.widget.ProfilePictureView;
 import com.parse.ParseObject;
-import com.parse.ParseUser;
 
 public class WorkOutList extends ListActivity {
 
@@ -33,11 +29,6 @@ public class WorkOutList extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_work_out_list);
-<<<<<<< HEAD
-
-=======
-		
->>>>>>> 89cf3ccd0b1201f5130c737b20f9148fd831951f
 		MainActivity.setActionBar(this, R.layout.actionbar_custom_view_home);
         
 

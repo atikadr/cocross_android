@@ -43,7 +43,7 @@ public class ActivityWorkoutDetail extends FragmentActivity{
 	}
 	
 	public void keyInButtonClicked(View v){
-		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message", "AMRAP");
+		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message", "AMRAP", "00");
 		mDialog.show(getSupportFragmentManager(), "qr_dialog");
 	}
 	
