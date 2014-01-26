@@ -9,7 +9,9 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -30,6 +32,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.facebook.widget.ProfilePictureView;
+import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
@@ -37,7 +40,7 @@ import com.parse.SignUpCallback;
 public class MainActivity extends Activity {
 	
 	private TableRow logInTableRow;
-	private TableRow facebookInfoTableRow;
+	private TableRow welcomeViewGroup;
 	
 	private LoginButton facebookLoginButton;
 	private ProfilePictureView facebookProfilePic;
@@ -59,7 +62,11 @@ public class MainActivity extends Activity {
 		Parse.initialize(this, "tIV7myvZXkFyeUe4uP6vUg889npZQX2es8LO7AKv", "rPAcfcivzZJjw0nlcPGske1oG4EDraPP11cngjr7");
 
 		final ActionBar actionBar = getActionBar();
-        actionBar.hide(); 
+        actionBar.setCustomView(R.layout.actionbar_custom_view_home);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.hide();
 		facebookUiHelper = new UiLifecycleHelper(this, callback);
 		facebookUiHelper.onCreate(savedInstanceState);
 		
@@ -68,9 +75,9 @@ public class MainActivity extends Activity {
 		facebookLoginButton.setReadPermissions(Arrays
 				.asList("user_likes", "user_status", "email"));
 		
-		facebookInfoTableRow = (TableRow) findViewById(R.id.facebookInfoTableRow);
-		facebookProfilePic = (ProfilePictureView) facebookInfoTableRow.findViewById(R.id.facebookProfilePic);
-		facebookUserName = (TextView) facebookInfoTableRow.findViewById(R.id.facebookUserName);
+		welcomeViewGroup = (TableRow) findViewById(R.id.welcome_row);
+		facebookProfilePic = (ProfilePictureView) actionBar.getCustomView().findViewById(R.id.facebookProfilePic);
+		facebookUserName = (TextView) actionBar.getCustomView().findViewById(R.id.facebookUserName);
 		
 		final PopupMenu menu = new PopupMenu(this, facebookProfilePic);
 		menu.inflate(R.menu.facebook);
@@ -173,6 +180,7 @@ public class MainActivity extends Activity {
 		if (isResumed) {
 			if (state.isOpened()) {
 				showView(FACEBOOK_INFO);
+				getActionBar().show();
 			} else if (state.isClosed()) {
 				showView(LOG_IN);
 			}
@@ -188,7 +196,7 @@ public class MainActivity extends Activity {
                         facebookProfilePic.setProfileId(user.getId());
                         facebookUserName.setText(user.getName());
                         if(ParseUser.getCurrentUser()==null){
-	                        ParseUser pUser = new ParseUser();
+	                        final ParseUser pUser = new ParseUser();
 	                        pUser.setUsername(user.getName());
 	                        pUser.setPassword("password");
 	                        pUser.setEmail(user.getProperty("email").toString());
@@ -196,10 +204,21 @@ public class MainActivity extends Activity {
 	                        pUser.put("gender", user.getProperty("gender").toString().equals("male"));
 	                        if(user.getBirthday()!=null)
 	                        	pUser.put("age", getAge(user.getBirthday()));
+	                        
+	                        SharedPreferences sp = getSharedPreferences("credentials", MODE_PRIVATE);
+							sp.edit().putString("username", user.getName()).commit();
+							sp.edit().putString("facebook_id", user.getId()).commit();
+	                        
 	                        pUser.signUpInBackground(new SignUpCallback() {
 								@Override
 								public void done(com.parse.ParseException e) {
 									Log.d("Yay", "Signed-up!");
+									ParseUser.logInInBackground(pUser.getUsername(), "password", new LogInCallback() {
+										@Override
+										public void done(ParseUser user, com.parse.ParseException e) {
+											//TODO after logging in parse
+										}
+									});
 								}
 							});
                         }
@@ -215,11 +234,11 @@ public class MainActivity extends Activity {
 	
 	private void showView(int id) {
 		if(id == LOG_IN) {
-			facebookInfoTableRow.setVisibility(View.GONE);
+			welcomeViewGroup.setVisibility(View.GONE);
 			logInTableRow.setVisibility(View.VISIBLE);
 		} else {
 			logInTableRow.setVisibility(View.GONE);
-			facebookInfoTableRow.setVisibility(View.VISIBLE);
+			welcomeViewGroup.setVisibility(View.VISIBLE);
 			Session session = Session.getActiveSession();
 			if(session.isOpened()) {
 				makeMeRequest(session);
@@ -254,9 +273,33 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 	    // Inflate the menu items for use in the action bar
-	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.action_bar, menu);
+	    //MenuInflater inflater = getMenuInflater();
+	    //inflater.inflate(R.menu.action_bar, menu);
 	    return super.onCreateOptionsMenu(menu);
+	}
+
+	/**
+	 * Helper function to setup actionbar
+	 * need to be logged-in
+	 * @param activity
+	 * @param actionbarLayoutID
+	 */
+	public static void setActionBar(Activity activity, int actionbarLayoutID) {
+		//set actionbar
+		final ActionBar actionBar = activity.getActionBar();
+        actionBar.setCustomView(actionbarLayoutID);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+        SharedPreferences sp = activity.getSharedPreferences("credentials", MODE_PRIVATE);
+       // if(ParseUser.getCurrentUser()!=null){
+	        ProfilePictureView facebookProfilePic = (ProfilePictureView) actionBar.getCustomView().findViewById(R.id.facebookProfilePic);
+	        if(facebookProfilePic!=null)
+	        	facebookProfilePic.setProfileId(sp.getString("facebook_id", null));
+	        TextView facebookUserName = (TextView) actionBar.getCustomView().findViewById(R.id.facebookUserName);
+	        if(facebookUserName!=null)
+	        	facebookUserName.setText(sp.getString("username", "CoCross"));
+       // }
 	}
 
 }

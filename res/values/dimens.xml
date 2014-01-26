@@ -5,7 +5,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="text_margin">10dp</dimen>
     <dimen name="activity_margin">16dp</dimen>
-    <dimen name="profile_pic_mask">55dp</dimen>
+    <dimen name="profile_pic_mask">48dp</dimen>
     <dimen name="profile_pic">36dp</dimen>
 
 </resources>
