@@ -133,10 +133,23 @@ public class Queries {
 			e.printStackTrace();
 		}
 		int i, boxsize = boxes.size();
-		List<String> regions;
-		int region;
 		for (i=0;i<boxsize;i++){
 			//do something with boxes.get(i).get("boxName");
 		}
+	}
+	
+	public static List<ParseObject> getWorkoutList(){
+		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Workout");
+		
+		List<ParseObject> workouts = null;
+		
+		try {
+			workouts = mainQuery.find();
+		} catch (com.parse.ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return workouts;
 	}
 }

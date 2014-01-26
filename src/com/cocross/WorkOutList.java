@@ -1,6 +1,7 @@
 package com.cocross;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -15,6 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cocross.utils.ParseProxyObject;
+import com.cocross.utils.Queries;
+import com.parse.ParseObject;
 
 public class WorkOutList extends ListActivity {
 
@@ -28,7 +31,8 @@ public class WorkOutList extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_work_out_list);
 		
-		// TODO: workOutList = ???
+		//TODO : change workouts to workOutList parseProxyObject
+		List<ParseObject> workouts = Queries.getWorkoutList();
 		
 		adapter = new WorkOutAdapter(workOutList);
 		
