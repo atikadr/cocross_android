@@ -31,7 +31,6 @@ public class WorkOutList extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_work_out_list);
 		
-		//TODO : change workouts to workOutList ParseObject
 		List<ParseObject> workOutList = Queries.getWorkoutList();
 		mWorkOutList = (ArrayList<ParseObject>) workOutList;
 		adapter = new WorkOutAdapter(mWorkOutList);
@@ -80,7 +79,7 @@ public class WorkOutList extends ListActivity {
 
 	private class WorkOutAdapter extends ArrayAdapter<ParseObject> {
 
-		private static final int DESC_MAX_LENGTH = 50;
+		private static final int DESC_MAX_LENGTH = 45;
 
 		public WorkOutAdapter(ArrayList<ParseObject> workOutList) {
 			super(getApplication(), android.R.layout.simple_list_item_1, workOutList);
