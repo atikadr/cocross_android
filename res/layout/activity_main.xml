@@ -48,7 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
+            android:background="@drawable/positive_button"
             android:text="@string/work_out" />
+        
 
         </LinearLayout>
         

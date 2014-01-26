@@ -291,6 +291,7 @@ public class MainActivity extends Activity {
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        
         SharedPreferences sp = activity.getSharedPreferences("credentials", MODE_PRIVATE);
        // if(ParseUser.getCurrentUser()!=null){
 	        ProfilePictureView facebookProfilePic = (ProfilePictureView) actionBar.getCustomView().findViewById(R.id.facebookProfilePic);

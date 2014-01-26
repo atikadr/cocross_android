@@ -43,7 +43,7 @@
             android:id="@+id/workOutScoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#0000CC"
+            android:textColor="#16A086"
             android:textSize="12sp"/>
     </TableRow>
 
