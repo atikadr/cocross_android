@@ -1,5 +1,8 @@
 package com.cocross;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -37,7 +40,7 @@ public class ActivityCounter extends FragmentActivity {
 	private boolean isLight = true;
 	private boolean isFirstTime = true;
 
-	private static final float SHAKE_THRESHOLD_GRAVITY = 1.7F;
+	private static final float SHAKE_THRESHOLD_GRAVITY = 1.9F;
 	private static final int SHAKE_SLOP_TIME_MS = 500;
 
 	private long mShakeTimestamp;
@@ -84,7 +87,34 @@ public class ActivityCounter extends FragmentActivity {
 	}
 
 	public void onDiscardClicked(View v) {
-		finish();
+		
+		if(isContinue) {
+			countingChronometer.stop();
+		}
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("Are you sure you want to cancel?");
+		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(ActivityCounter.this, WorkOutList.class);
+				startActivity(intent);
+			}
+		});
+		
+		builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				if(isContinue){
+					doAccordingToShakeMode(SHAKE_MODE.START);
+				}
+			}
+		});
+		
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 
 	private SensorEventListener touchListener = new SensorEventListener() {
@@ -104,7 +134,7 @@ public class ActivityCounter extends FragmentActivity {
 					if (!isLight) {
 						counter++;
 						counterTextView.setText(String.valueOf(counter));
-						vibrator.vibrate(300);
+						vibrator.vibrate(100);
 					}
 				}
 			}
@@ -142,16 +172,13 @@ public class ActivityCounter extends FragmentActivity {
 
 					if (isFirstTime) {
 						shakeMode = SHAKE_MODE.START;
-						isFirstTime = false;
-						counterHintTextView.setText("(Tap the Proximity Sensor to count)");
 					} else if (shakeMode == SHAKE_MODE.PAUSE) {
 						shakeMode = SHAKE_MODE.START;
-						counterHintTextView.setText("(Tap the Proximity Sensor to count)");
+						
 					} else {
-						shakeMode = SHAKE_MODE.PAUSE;
-						counterHintTextView.setText("");
+						shakeMode = SHAKE_MODE.PAUSE;	
 					}
-
+					
 					mShakeTimestamp = now;
 					doAccordingToShakeMode(shakeMode);
 				}
@@ -192,13 +219,22 @@ public class ActivityCounter extends FragmentActivity {
 
 			secondsWaiting = Long.parseLong(array[1]);
 			isContinue = true;
-			countingTextView.setText("(Shake to pause)");
+			
+			if(isFirstTime) {
+				counterHintTextView.setText("(Tap the Proximity Sensor to count)");
+				isFirstTime = false;
+			} else {
+				countingTextView.setText("(Shake to pause)");
+			}
+			
+			counterHintTextView.setText("(Tap the Proximity Sensor to count)");
 			countingChronometer.start();
 
 		} else if (shakeMode == SHAKE_MODE.PAUSE) {
 			isContinue = false;
 			countingTextView.setText("(Shake to start)");
 			countingChronometer.stop();
+			counterHintTextView.setText("");
 		}
 	}
 

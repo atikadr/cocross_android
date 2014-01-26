@@ -2,17 +2,10 @@ package com.cocross;
 
 import java.util.Date;
 
-import com.cocross.utils.ParseProxyObject;
-import com.cocross.utils.Queries;
-import com.parse.CountCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -21,6 +14,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.cocross.utils.ParseProxyObject;
+import com.cocross.utils.Queries;
+import com.parse.CountCallback;
 
 public class SubmitDialog extends DialogFragment {
 	String mMessage;
@@ -87,6 +84,10 @@ public class SubmitDialog extends DialogFragment {
 										}
 									}
 								});
+						
+						// TODO: post and share on facebook
+						Intent intent = new Intent(getActivity(), WorkOutList.class);
+						startActivity(intent);
 					}
 				});;
 		//dismiss button
