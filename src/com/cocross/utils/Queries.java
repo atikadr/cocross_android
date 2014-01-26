@@ -27,18 +27,19 @@ public class Queries {
 			CountCallback ccb
 			){
 
+		ParseObject pWorkout = ParseObject.createWithoutData("Workout", workout.getObjectId());
 		ParseObject logs = new ParseObject("Logs");
 		logs.put("score", score);
-		logs.put("workoutTime", workoutTime);
+		logs.put("workoutTime", pWorkout );
 		logs.put("comment", comment);
-		//logs.put("workout", workout);
-		//logs.put("createdBy", ParseUser.getCurrentUser());
-		
+		logs.put("workout", pWorkout);
+		logs.put("createdBy", ParseUser.getCurrentUser());
+		logs.put("isPR", false);
+		//check for existing PR
 		ParseObject PR = null;
-		
 		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Logs");
-		//mainQuery.whereEqualTo("createdBy", ParseUser.getCurrentUser());
-		//mainQuery.whereEqualTo("workout", workout);
+		mainQuery.whereEqualTo("createdBy", ParseUser.getCurrentUser());
+		mainQuery.whereEqualTo("workout", pWorkout);
 		mainQuery.whereEqualTo("isPR", true);
 		try {
 			PR = mainQuery.getFirst();
@@ -49,14 +50,14 @@ public class Queries {
 		
 		if (PR == null || PR.getInt("score") < score){
 			logs.put("isPR", true);
-			PR.put("isPR", false);
+		}else if (PR!=null && PR.getInt("score")>=score){
+			PR.put("isPR", false);		
 			PR.saveInBackground();
 		}
 
 		logs.saveInBackground();
 		
 		getMyRanking(logs, ccb);
-		
 	}
 	
 	/**
@@ -85,8 +86,6 @@ public class Queries {
 	 */
 	public static void getMyRanking(ParseObject logs, CountCallback ccb){
 		
-		int myRank;
-		
 		ParseQuery<ParseObject> mainQuery = ParseQuery.getQuery("Logs");
 
 		mainQuery.whereEqualTo("workout", logs.get("workout"));
@@ -95,8 +94,6 @@ public class Queries {
 		mainQuery.whereGreaterThan("score", logs.get("score"));
 
 		mainQuery.countInBackground(ccb);
-		
-
 	}
 	
 	public void getMyLogs10(){

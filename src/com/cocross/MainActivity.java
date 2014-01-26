@@ -200,7 +200,7 @@ public class MainActivity extends Activity {
 	                        pUser.setUsername(user.getName());
 	                        pUser.setPassword("password");
 	                        pUser.setEmail(user.getProperty("email").toString());
-	                        pUser.put("facebook_id", user.getId());
+	                        pUser.put("facebook_id", Integer.parseInt(user.getId()));
 	                        pUser.put("gender", user.getProperty("gender").toString().equals("male"));
 	                        if(user.getBirthday()!=null)
 	                        	pUser.put("age", getAge(user.getBirthday()));
@@ -212,13 +212,16 @@ public class MainActivity extends Activity {
 	                        pUser.signUpInBackground(new SignUpCallback() {
 								@Override
 								public void done(com.parse.ParseException e) {
-									Log.d("Yay", "Signed-up!");
-									ParseUser.logInInBackground(pUser.getUsername(), "password", new LogInCallback() {
-										@Override
-										public void done(ParseUser user, com.parse.ParseException e) {
-											//TODO after logging in parse
-										}
-									});
+									if(e!=null) Log.d("error logging in", e.getLocalizedMessage());
+									else {Log.d("Yay", "Signed-up!");
+										ParseUser.logInInBackground(pUser.getUsername(), "password", new LogInCallback() {
+											@Override
+											public void done(ParseUser user, com.parse.ParseException e) {
+												if(e!=null) Log.d("error logging in", e.getLocalizedMessage());
+												else Log.d("Parse login", "YAY" + user.getUsername());
+											}
+										});
+									}
 								}
 							});
                         }

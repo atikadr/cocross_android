@@ -35,6 +35,11 @@ public class ParseProxyObject implements Serializable {
 				// You might want to add more conditions here, for embedded ParseObject, ParseFile, etc.
 			}
 		}
+		values.put("objectId", object.getObjectId());
+	}
+	
+	public String getObjectId(){
+		return (String) values.get("objectId");
 	}
 	
 	public String getString(String key) {
@@ -75,6 +80,19 @@ public class ParseProxyObject implements Serializable {
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * returns the ParseObject of type `className` from ParseProxyObject
+	 * @param className
+	 * @return
+	 */
+	public ParseObject getParseObject(String className){
+		ParseObject pObj = new ParseObject(className);
+		for(String key : values.keySet()){
+			pObj.put(key, values.get(key));
+		}
+		return pObj;
 	}
 	
 	public Boolean has(String key) {
