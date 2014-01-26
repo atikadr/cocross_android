@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 		facebookId = (TextView) facebookInfoTableRow.findViewById(R.id.facebookId);
 		
 		final PopupMenu menu = new PopupMenu(this, facebookProfilePic);
-		menu.inflate(R.menu.);
+		menu.inflate(R.menu.facebook);
 		
 		facebookProfilePic.setOnClickListener(new OnClickListener(){
 
