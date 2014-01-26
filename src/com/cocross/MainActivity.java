@@ -31,6 +31,8 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.facebook.widget.ProfilePictureView;
 import com.parse.Parse;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class MainActivity extends Activity {
 	
@@ -66,7 +68,7 @@ public class MainActivity extends Activity {
 		logInTableRow = (TableRow) findViewById(R.id.logInTableRow);
 		facebookLoginButton = (LoginButton) logInTableRow.findViewById(R.id.authButton);
 		facebookLoginButton.setReadPermissions(Arrays
-				.asList("user_likes", "user_status"));
+				.asList("user_likes", "user_status", "email"));
 		
 		facebookInfoTableRow = (TableRow) findViewById(R.id.facebookInfoTableRow);
 		facebookProfilePic = (ProfilePictureView) facebookInfoTableRow.findViewById(R.id.facebookProfilePic);
@@ -75,7 +77,11 @@ public class MainActivity extends Activity {
 		facebookId = (TextView) facebookInfoTableRow.findViewById(R.id.facebookId);
 		
 		final PopupMenu menu = new PopupMenu(this, facebookProfilePic);
+<<<<<<< HEAD
 		menu.inflate(R.menu.facebook);
+=======
+		menu.inflate(R.menu.facebook_signout);
+>>>>>>> 4d027f6dea365808b71c28f5ca5e461b220df544
 		
 		facebookProfilePic.setOnClickListener(new OnClickListener(){
 
@@ -185,8 +191,22 @@ public class MainActivity extends Activity {
                     	facebookId.setText(user.getId());
                         facebookProfilePic.setProfileId(user.getId());
                         facebookUserName.setText(user.getName());
-                        if(user.getBirthday()!=null)
-                        	facebookAge.setText(getAge(user.getBirthday()));
+                        if(ParseUser.getCurrentUser()==null){
+	                        ParseUser pUser = new ParseUser();
+	                        pUser.setUsername(user.getName());
+	                        pUser.setPassword("password");
+	                        pUser.setEmail(user.getProperty("email").toString());
+	                        pUser.put("facebook_id", user.getId());
+	                        pUser.put("gender", user.getProperty("gender").toString().equals("male"));
+	                        if(user.getBirthday()!=null)
+	                        	pUser.put("age", getAge(user.getBirthday()));
+	                        pUser.signUpInBackground(new SignUpCallback() {
+								@Override
+								public void done(com.parse.ParseException e) {
+									Log.d("Yay", "Signed-up!");
+								}
+							});
+                        }
                     }
                 }
                 if (response.getError() != null) {
