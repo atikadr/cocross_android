@@ -1,5 +1,7 @@
 package com.cocross;
 
+import com.cocross.utils.ParseProxyObject;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -63,8 +65,9 @@ public class ActivityCounter extends FragmentActivity {
 
 	public void onFinishClicked(View v) {
 		String score = (String) ((TextView)findViewById(R.id.counterTextView)).getText();
+		ParseProxyObject workout = (ParseProxyObject) getIntent().getSerializableExtra("workout");
 		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message",
-				"AMRAP", score);
+				workout, score);
 		mDialog.show(getSupportFragmentManager(), "qr_dialog");
 	}
 

@@ -28,13 +28,13 @@ public class SubmitDialog extends DialogFragment {
      * Create a new instance of MyDialogFragment, providing "text"
      * as an argument.
      */
-    static SubmitDialog newInstance(String msg, String type, String score) {
+    static SubmitDialog newInstance(String msg, ParseProxyObject mWorkout, String score) {
     	SubmitDialog f = new SubmitDialog();
 
         // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putString("msg", msg);
-        args.putString("score_type", type);
+        args.putSerializable("workout", mWorkout);
         args.putString("score", score);
         f.setArguments(args);
 
@@ -57,6 +57,7 @@ public class SubmitDialog extends DialogFragment {
 	    
 	    //set score
 	    String score = getArguments().getString("score");
+	    final ParseProxyObject workout = (ParseProxyObject) getArguments().getSerializable("workout");
 	    if(score!=null)
 	    ((EditText)newLogView.findViewById(R.id.field_score)).setText(score);
 	    //submit button
@@ -70,7 +71,7 @@ public class SubmitDialog extends DialogFragment {
 						int score  = Integer.parseInt(((EditText)newLogView.findViewById(R.id.field_score)).getText().toString());
 						String comment  = ((EditText)newLogView.findViewById(R.id.field_comment)).getText().toString();
 						Queries.submitLogAndGetRanking(workoutTime, null, score, 
-								comment, ((ActivityWorkoutDetail)getActivity()).getWorkout(),
+								comment, workout,
 								new CountCallback() {
 									@Override
 									public void done(int count, com.parse.ParseException e) {

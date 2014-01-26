@@ -38,12 +38,13 @@ public class ActivityWorkoutDetail extends FragmentActivity{
 		if(true){
 			//workout type is time
 			Intent startCounterIntent = new Intent(this, ActivityCounter.class);
+			startCounterIntent.putExtra("workout", mWorkout);
 			startActivity(startCounterIntent);
 		}
 	}
 	
 	public void keyInButtonClicked(View v){
-		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message", "AMRAP", "00");
+		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message", mWorkout, "00");
 		mDialog.show(getSupportFragmentManager(), "qr_dialog");
 	}
 	
