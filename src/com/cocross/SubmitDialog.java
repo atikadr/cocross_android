@@ -20,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class SubmitDialog extends DialogFragment {
 	String mMessage;
@@ -77,6 +78,8 @@ public class SubmitDialog extends DialogFragment {
 									public void done(int count, com.parse.ParseException e) {
 										// TODO Auto-generated method stub
 										if (e == null){
+											dismiss();
+											Toast.makeText(getActivity(), "Ranking: "+ (count+1), Toast.LENGTH_LONG).show();
 											Log.d("my rank!!!", "my ranking: " + (count + 1));
 										}
 										else {
