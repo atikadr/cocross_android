@@ -34,7 +34,9 @@ import com.facebook.widget.LoginButton;
 import com.facebook.widget.ProfilePictureView;
 import com.parse.LogInCallback;
 import com.parse.Parse;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 
 public class MainActivity extends Activity {
@@ -60,7 +62,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Parse.initialize(this, "tIV7myvZXkFyeUe4uP6vUg889npZQX2es8LO7AKv", "rPAcfcivzZJjw0nlcPGske1oG4EDraPP11cngjr7");
-
+		ParseFacebookUtils.initialize(getString(R.string.app_id));
 		final ActionBar actionBar = getActionBar();
         actionBar.setCustomView(R.layout.actionbar_custom_view_home);
         actionBar.setDisplayShowTitleEnabled(false);
@@ -216,9 +218,21 @@ public class MainActivity extends Activity {
 									else {Log.d("Yay", "Signed-up!");
 										ParseUser.logInInBackground(pUser.getUsername(), "password", new LogInCallback() {
 											@Override
-											public void done(ParseUser user, com.parse.ParseException e) {
+											public void done(final ParseUser user, com.parse.ParseException e) {
 												if(e!=null) Log.d("error logging in", e.getLocalizedMessage());
-												else Log.d("Parse login", "YAY" + user.getUsername());
+												else{
+													Log.d("Parse login", "YAY" + user.getUsername());
+													if (!ParseFacebookUtils.isLinked(user)) {
+														  ParseFacebookUtils.link(user, MainActivity.this, new SaveCallback() {
+														    @Override
+														    public void done(com.parse.ParseException ex) {
+														      if (ParseFacebookUtils.isLinked(user)) {
+														        Log.d("MyApp", "Woohoo, user logged in with Facebook!");
+														      }
+														    }
+														  });
+														}
+												}
 											}
 										});
 									}
