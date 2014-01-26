@@ -56,7 +56,9 @@ public class SubmitDialog extends DialogFragment {
 	    final View newLogView = inflater.inflate(R.layout.dialog_new_log, null);
 	    
 	    //set score
-	    ((EditText)newLogView.findViewById(R.id.field_score)).setText(getArguments().getString("score"));
+	    String score = getArguments().getString("score");
+	    if(score!=null)
+	    ((EditText)newLogView.findViewById(R.id.field_score)).setText(score);
 	    //submit button
 	    newLogView.findViewById(R.id.button_submit).setOnClickListener(
 	    		new OnClickListener() {
