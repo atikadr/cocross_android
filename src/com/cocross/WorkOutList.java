@@ -22,7 +22,7 @@ import com.parse.ParseObject;
 public class WorkOutList extends ListActivity {
 
 	WorkOutAdapter adapter;
-	ArrayList<ParseProxyObject> workOutList;
+	ArrayList<ParseObject> mWorkOutList;
 	
 	public final static String PROXY_TAG = "com.cocross.PARSE_PROXY_OBJECT";
 	
@@ -31,10 +31,10 @@ public class WorkOutList extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_work_out_list);
 		
-		//TODO : change workouts to workOutList parseProxyObject
-		List<ParseObject> workouts = Queries.getWorkoutList();
-		
-		adapter = new WorkOutAdapter(workOutList);
+		//TODO : change workouts to workOutList ParseObject
+		List<ParseObject> workOutList = Queries.getWorkoutList();
+		mWorkOutList = (ArrayList<ParseObject>) workOutList;
+		adapter = new WorkOutAdapter(mWorkOutList);
 		
 		setListAdapter(adapter);
 	}
@@ -43,8 +43,9 @@ public class WorkOutList extends ListActivity {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		Intent theIntent = new Intent(getApplication(), ActivityWorkoutDetail.class);
 		
-		ParseProxyObject clickedObject = ((WorkOutAdapter) getListAdapter()).getItem(position);
-		theIntent.putExtra(PROXY_TAG, clickedObject);
+		ParseObject clickedObject = ((WorkOutAdapter) getListAdapter()).getItem(position);
+		ParseProxyObject ppo = new ParseProxyObject(clickedObject);
+		theIntent.putExtra(PROXY_TAG, ppo);
 		
 		startActivityForResult(theIntent, 0);
 	}
@@ -77,11 +78,11 @@ public class WorkOutList extends ListActivity {
 	}
 
 
-	private class WorkOutAdapter extends ArrayAdapter<ParseProxyObject> {
+	private class WorkOutAdapter extends ArrayAdapter<ParseObject> {
 
 		private static final int DESC_MAX_LENGTH = 50;
 
-		public WorkOutAdapter(ArrayList<ParseProxyObject> workOutList) {
+		public WorkOutAdapter(ArrayList<ParseObject> workOutList) {
 			super(getApplication(), android.R.layout.simple_list_item_1, workOutList);
 		}
 		
@@ -92,7 +93,7 @@ public class WorkOutList extends ListActivity {
 				convertView = getLayoutInflater().inflate(R.layout.work_out_entry, null);
 			}
 			
-			ParseProxyObject object = ((WorkOutAdapter) getListAdapter()).getItem(position);
+			ParseObject object = ((WorkOutAdapter) getListAdapter()).getItem(position);
 			
 			TextView workOutNameTextView = (TextView) convertView.findViewById(R.id.workOutNameTextView);
 			workOutNameTextView.setText(object.getString("workoutName"));

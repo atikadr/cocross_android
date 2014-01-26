@@ -7,8 +7,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="sample_description">        40 Burpees\n75 pound Snatch, 30 reps\n30 Burpees\n135 pound Snatch, 30 reps\n
 20 Burpees\n165 pound Snatch, 30 reps\n10 Burpees\n210 pound Snatch</string>
-    <string name="button_start_text">Score me!</string>
+    <string name="button_start_text">Start counting!</string>
     <string name="button_key_in_score">Key in</string>
+    <string name="button_cancel">Next time</string>
     <string name="title_activity_facebook">Facebook</string>
     <string name="title_facebook_login">Facebook</string>
     <string name="app_id">252904941538409</string>

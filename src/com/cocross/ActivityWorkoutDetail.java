@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * Activity to show details of a workout, and start a new log for that
@@ -22,8 +23,12 @@ public class ActivityWorkoutDetail extends FragmentActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mWorkout = (ParseProxyObject) getIntent().getSerializableExtra(KEY_WORKOUT);
 		setContentView(R.layout.activity_workout_detail);
+		mWorkout = (ParseProxyObject) getIntent().getSerializableExtra(WorkOutList.PROXY_TAG);
+		String name = mWorkout.getString("workoutName");
+		TextView tv = ((TextView)findViewById(R.id.text_workout_name));
+		tv.setText(name);
+		((TextView)findViewById(R.id.text_workout_description)).setText(mWorkout.getString("description"));
 	}
 	
 	public void startButtonClicked(View v){
@@ -39,6 +44,10 @@ public class ActivityWorkoutDetail extends FragmentActivity{
 	public void keyInButtonClicked(View v){
 		SubmitDialog mDialog = SubmitDialog.newInstance("Dialog Message", "AMRAP");
 		mDialog.show(getSupportFragmentManager(), "qr_dialog");
+	}
+	
+	public void onDismiss(View v){
+		finish();
 	}
 
 	public ParseProxyObject getWorkout() {
