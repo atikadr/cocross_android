@@ -10,12 +10,12 @@
         android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/activity_margin"
         android:text="Workout 13.1"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <LinearLayout 
         android:layout_below="@+id/text_workout_name"
-	    android:layout_above="@+id/button_key_in_score"
 	    android:background="@drawable/info_background"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -27,16 +27,18 @@
         android:layout_height="wrap_content"
         android:text="What to do:"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-        <ScrollView
-	    android:layout_height="wrap_content"
-	    android:layout_width="match_parent">
-	        <TextView
+        <TextView
 	        android:id="@+id/text_workout_description"
 	        android:layout_margin="@dimen/text_margin"
+	        android:paddingBottom="20dp"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:text="@string/sample_description"
 	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        <ScrollView
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent">
+	        
 		</ScrollView>
     </LinearLayout>
     <Button
@@ -45,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="keyInButtonClicked"
+        android:visibility="gone"
         android:text="@string/button_key_in_score" />
     <Button
         android:id="@+id/button_cancel"
@@ -52,16 +55,20 @@
         android:layout_toRightOf="@+id/button_key_in_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="@string/button_cancel"
         android:onClick="onDismiss" />
 
     <Button
         android:id="@+id/button_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="48dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:onClick="startButtonClicked"
+        android:background="@drawable/positive_button"
+        android:textColor="#ffffff"
+        style="?android:attr/buttonStyleSmall"
         android:text="@string/button_start_text" />
 
 </RelativeLayout>
