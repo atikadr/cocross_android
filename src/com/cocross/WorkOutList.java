@@ -29,7 +29,7 @@ public class WorkOutList extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_work_out_list);
-		MainActivity.setActionBar(this, R.layout.actionbar_custom_view_home);
+		MainActivity.setActionBar(this, R.layout.actionbar_custom_view_with_back);
         
 
 		//TODO : change workouts to workOutList ParseObject

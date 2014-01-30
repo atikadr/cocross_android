@@ -13,7 +13,7 @@
             android:padding="@dimen/text_margin"
             android:textColor="#333"
             android:textSize="18sp"
-            android:text="Sreang Sothearith" />
+            android:text="Hello" />
     <FrameLayout
             android:id="@+id/icon_layout"
             android:layout_width="@dimen/profile_pic_mask"

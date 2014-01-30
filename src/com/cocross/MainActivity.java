@@ -301,14 +301,22 @@ public class MainActivity extends Activity {
 	 * @param activity
 	 * @param actionbarLayoutID
 	 */
-	public static void setActionBar(Activity activity, int actionbarLayoutID) {
+	public static void setActionBar(final Activity activity, final int actionbarLayoutID) {
 		//set actionbar
 		final ActionBar actionBar = activity.getActionBar();
         actionBar.setCustomView(actionbarLayoutID);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowHomeEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
-        
+        if(actionbarLayoutID ==  R.layout.actionbar_custom_view_with_back){
+        	((Button)actionBar.getCustomView().findViewById(R.id.button_back))
+        	.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					activity.finish();
+				}
+			});
+        }
         SharedPreferences sp = activity.getSharedPreferences("credentials", MODE_PRIVATE);
        // if(ParseUser.getCurrentUser()!=null){
 	        ProfilePictureView facebookProfilePic = (ProfilePictureView) actionBar.getCustomView().findViewById(R.id.facebookProfilePic);

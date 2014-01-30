@@ -27,14 +27,7 @@ public class ActivityWorkoutDetail extends FragmentActivity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_workout_detail);
 		MainActivity.setActionBar(this, R.layout.actionbar_custom_view_with_back);
-		((Button)getActionBar().getCustomView().findViewById(R.id.button_back))
-			.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
+
 		mWorkout = (ParseProxyObject) getIntent().getSerializableExtra(WorkOutList.PROXY_TAG);
 		String name = mWorkout.getString("workoutName");
 		TextView tv = ((TextView)findViewById(R.id.text_workout_name));
